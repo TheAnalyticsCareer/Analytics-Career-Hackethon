@@ -116,9 +116,9 @@ const Leaderboard: React.FC = () => {
           </div>
         </motion.div>
 
-        {/* Full Leaderboard Table */}
+        {/* Leaderboard Table */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
-          className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 overflow-x-auto"
+          className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700"
         >
           <div className="p-6 border-b border-slate-200 dark:border-slate-700 flex flex-col sm:flex-row items-center justify-between gap-4">
             <h2 className="text-xl font-semibold text-slate-900 dark:text-white">Full Rankings</h2>
@@ -133,60 +133,65 @@ const Leaderboard: React.FC = () => {
             </select>
           </div>
 
-          <table className="w-full text-sm">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-left">
-              <tr>
-                <th className="px-6 py-4 text-slate-500 dark:text-slate-400">Rank</th>
-                <th className="px-6 py-4 text-slate-500 dark:text-slate-400">User</th>
-                <th className="px-6 py-4 text-slate-500 dark:text-slate-400">Total Points</th>
-                <th className="px-6 py-4 text-slate-500 dark:text-slate-400">Challenges</th>
-                <th className="px-6 py-4 text-slate-500 dark:text-slate-400">Badges</th>
-                <th className="px-6 py-4 text-slate-500 dark:text-slate-400">Last Active</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-200 dark:divide-slate-700">
-              {leaderboard.map((entry, index) => {
-                const isCurrentUser = user && user.email === entry.email;
-                return (
-                  <motion.tr
-                    key={entry.id}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.03 }}
-                    className={`hover:bg-slate-50 dark:hover:bg-slate-700/40 transition-colors ${
-                      isCurrentUser ? 'bg-blue-100 dark:bg-blue-900/40 font-semibold' : ''
-                    }`}
-                  >
-                    <td className="px-6 py-4">{getRankIcon(entry.rank)}</td>
-                    <td className="px-6 py-4">
-                      <div className="flex items-center gap-3">
-                        <div className={`w-10 h-10 rounded-full ${getRankBg(entry.rank)} flex items-center justify-center`}>
-                          <Users className="w-5 h-5 text-white" />
+          {/* 👇 Table scroll wrapper for mobile */}
+          <div className="overflow-x-auto">
+            <table className="min-w-[800px] w-full text-xs sm:text-sm">
+              <thead className="bg-slate-50 dark:bg-slate-900/50 text-left">
+                {/* Optional: Add sticky header on scroll */}
+                {/* className="sticky top-0 z-10" */}
+                <tr>
+                  <th className="px-6 py-4 text-slate-500 dark:text-slate-400">Rank</th>
+                  <th className="px-6 py-4 text-slate-500 dark:text-slate-400">User</th>
+                  <th className="px-6 py-4 text-slate-500 dark:text-slate-400">Total Points</th>
+                  <th className="px-6 py-4 text-slate-500 dark:text-slate-400">Challenges</th>
+                  <th className="px-6 py-4 text-slate-500 dark:text-slate-400">Badges</th>
+                  <th className="px-6 py-4 text-slate-500 dark:text-slate-400">Last Active</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-200 dark:divide-slate-700">
+                {leaderboard.map((entry, index) => {
+                  const isCurrentUser = user && user.email === entry.email;
+                  return (
+                    <motion.tr
+                      key={entry.id}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.03 }}
+                      className={`hover:bg-slate-50 dark:hover:bg-slate-700/40 transition-colors ${
+                        isCurrentUser ? 'bg-blue-100 dark:bg-blue-900/40 font-semibold border-l-4 border-blue-500' : ''
+                      }`}
+                    >
+                      <td className="px-6 py-4">{getRankIcon(entry.rank)}</td>
+                      <td className="px-6 py-4">
+                        <div className="flex items-center gap-3">
+                          <div className={`w-10 h-10 rounded-full ${getRankBg(entry.rank)} flex items-center justify-center`}>
+                            <Users className="w-5 h-5 text-white" />
+                          </div>
+                          <div>
+                            <div className="font-medium text-slate-900 dark:text-white">{entry.name}</div>
+                          </div>
                         </div>
-                        <div>
-                          <div className="font-medium text-slate-900 dark:text-white">{entry.name}</div>
+                      </td>
+                      <td className="px-6 py-4 text-slate-700 dark:text-white">{entry.totalPoints.toLocaleString()}</td>
+                      <td className="px-6 py-4 text-slate-600 dark:text-slate-400">{entry.challengesCompleted}</td>
+                      <td className="px-6 py-4">
+                        <div className="flex flex-wrap gap-1">
+                          {entry.badges.map((badge, i) => (
+                            <span key={i} className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 text-xs rounded-full">
+                              {badge}
+                            </span>
+                          ))}
                         </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 text-slate-700 dark:text-white">{entry.totalPoints.toLocaleString()}</td>
-                    <td className="px-6 py-4 text-slate-600 dark:text-slate-400">{entry.challengesCompleted}</td>
-                    <td className="px-6 py-4">
-                      <div className="flex flex-wrap gap-1">
-                        {entry.badges.map((badge, i) => (
-                          <span key={i} className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 text-xs rounded-full">
-                            {badge}
-                          </span>
-                        ))}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 text-slate-600 dark:text-slate-400">
-                      {formatDistanceToNow(entry.lastActive, { addSuffix: true })}
-                    </td>
-                  </motion.tr>
-                );
-              })}
-            </tbody>
-          </table>
+                      </td>
+                      <td className="px-6 py-4 text-slate-600 dark:text-slate-400">
+                        {formatDistanceToNow(entry.lastActive, { addSuffix: true })}
+                      </td>
+                    </motion.tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
         </motion.div>
       </div>
     </div>

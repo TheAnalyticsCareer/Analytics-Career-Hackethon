@@ -12,6 +12,10 @@ const FeaturedChallenges: React.FC = () => {
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         {featured.map((challenge) => (
           <div key={challenge.id} className="bg-white dark:bg-slate-800 rounded-xl shadow p-6 flex flex-col justify-between border border-slate-100 dark:border-slate-700">
+            {/* Challenge image */}
+            {challenge.imageUrl && (
+              <img src={challenge.imageUrl} alt={challenge.title} className="w-full h-32 object-cover rounded mb-3" />
+            )}
             <div>
               <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">{challenge.title}</h3>
               <p className="text-sm text-slate-600 dark:text-slate-300 mb-3 line-clamp-3">{challenge.description}</p>
