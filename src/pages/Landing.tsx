@@ -62,7 +62,9 @@ import {
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
+
 import AuthModal from '../components/AuthModal';
+import ReviewSection from '../components/ReviewSection';
 
 const Landing: React.FC = () => {
   const { user, login } = useAuth();
@@ -203,7 +205,7 @@ const Landing: React.FC = () => {
       </section>
 
       {/* Featured Challenges Section */}
-      <section className="py-12 px-4 bg-gradient-to-br from-blue-50/60 to-purple-50/60 dark:from-slate-800/60 dark:to-slate-900/60">
+      <section className="py-10 px-2 bg-gradient-to-br from-blue-50/60 to-purple-50/60 dark:from-slate-800/60 dark:to-slate-900/60">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -219,8 +221,10 @@ const Landing: React.FC = () => {
         </div>
       </section>
 
+     
+
       {/* Features Section */}
-      <section className="py-20 px-4 bg-white/50 dark:bg-slate-800/50">
+      <section className="py-18 px-4 bg-white/50 dark:bg-slate-800/50">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -261,34 +265,9 @@ const Landing: React.FC = () => {
           </div>
         </div>
       </section>
-
-      {/* CTA Section */}
-      <section className="py-20 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-4xl font-bold text-slate-900 dark:text-white mb-6">
-              Ready to Sprint Through Data?
-            </h2>
-            <p className="text-xl text-slate-600 dark:text-slate-400 mb-8">
-              Join our community of data enthusiasts and start building your skills today.
-            </p>
-            
-            {!user && (
-              <button
-                onClick={() => setShowAuthModal(true)}
-                className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-200 font-semibold text-lg"
-              >
-                Get Started Free
-              </button>
-            )}
-          </motion.div>
-        </div>
-      </section>
+ {/* Review Section */}
+      <ReviewSection />
+    
 
       <AuthModal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)} />
     </div>

@@ -111,22 +111,22 @@ const AllChallenges: React.FC = () => {
                   key={challenge.id}
                   className="bg-white dark:bg-slate-900 rounded-xl shadow-md border border-slate-100 dark:border-slate-800 p-6 hover:shadow-xl transition-all flex flex-col justify-between"
                 >
+                  {/* Challenge image */}
+                  {challenge.imageUrl && (
+                    <img src={challenge.imageUrl} alt={challenge.title} className="w-full h-40 object-cover rounded mb-3" />
+                  )}
                   <div className="flex flex-col gap-3">
                     <div className="flex items-center gap-2 flex-wrap">
                       <h3 className="text-lg font-semibold text-slate-900 dark:text-white flex-1 line-clamp-2">
                         {challenge.title}
                       </h3>
                       <span
-                        className={`px-2 py-1 text-xs font-medium rounded ${getDifficultyColor(
-                          challenge.difficulty
-                        )}`}
+                        className={`px-2 py-1 text-xs font-medium rounded ${getDifficultyColor(challenge.difficulty)}`}
                       >
                         {challenge.difficulty}
                       </span>
                       <span
-                        className={`px-2 py-1 text-xs font-medium rounded ${getStatusColor(
-                          challenge.status
-                        )}`}
+                        className={`px-2 py-1 text-xs font-medium rounded ${getStatusColor(challenge.status)}`}
                       >
                         {challenge.status}
                       </span>

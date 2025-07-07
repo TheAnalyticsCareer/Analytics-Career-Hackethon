@@ -27,6 +27,7 @@ export interface Challenge {
   maxScore: number;
   tags: string[];
   status: 'active' | 'completed' | 'upcoming';
+  imageUrl?: string; // URL of the challenge image
 }
 
 export interface Submission {
@@ -98,6 +99,7 @@ const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
           maxScore: d.maxScore || 100,
           tags: d.tags || [],
           status: d.status,
+          imageUrl: d.imageUrl || '',
         };
       });
       setChallenges(data);
@@ -203,12 +205,18 @@ const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
       ...challenge,
       deadline: challenge.deadline instanceof Date ? challenge.deadline : new Date(challenge.deadline),
       createdAt: serverTimestamp(),
+      imageUrl: challenge.imageUrl || '',
     });
   };
 
-  const updateChallenge = (id: string, updates: Partial<Challenge>) => {
-    // Implementation would update in Firebase
-    console.log('Updating challenge:', id, updates);
+  const updateChallenge = async (id: string, updates: Partial<Challenge>) => {
+    // Update challenge in Firestore
+    const challengeRef = doc(db, 'challenges', id);
+    await updateDoc(challengeRef, {
+      ...updates,
+      ...(updates.deadline ? { deadline: updates.deadline instanceof Date ? updates.deadline : new Date(updates.deadline) } : {}),
+      ...(updates.imageUrl !== undefined ? { imageUrl: updates.imageUrl } : {}),
+    });
   };
 
   const deleteChallenge = async (id: string) => {

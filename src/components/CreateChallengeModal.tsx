@@ -27,6 +27,7 @@ const CreateChallengeModal: React.FC<CreateChallengeModalProps> = ({ isOpen, onC
     datasetUrl: challenge?.datasetUrl || '',
     tags: challenge?.tags ? challenge.tags.join(', ') : '',
     deadline: challenge?.deadline ? new Date(challenge.deadline).toISOString().slice(0, 10) : getDefaultDeadline(),
+    imageUrl: challenge?.imageUrl || '',
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -218,6 +219,24 @@ const CreateChallengeModal: React.FC<CreateChallengeModalProps> = ({ isOpen, onC
                   className="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="Python, Machine Learning, Data Analysis"
                 />
+              </div>
+
+              {/* Challenge Image Link */}
+              <div>
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                  Challenge Image URL
+                </label>
+                <input
+                  type="url"
+                  name="imageUrl"
+                  value={formData.imageUrl}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-white"
+                  placeholder="https://example.com/image.png"
+                />
+                {formData.imageUrl && (
+                  <img src={formData.imageUrl} alt="Challenge Preview" className="mt-2 w-32 h-20 object-cover rounded" />
+                )}
               </div>
 
               <div className="flex items-center justify-end gap-4 pt-6 border-t border-slate-200 dark:border-slate-700">
