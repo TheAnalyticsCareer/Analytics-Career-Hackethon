@@ -120,25 +120,43 @@ const Landing: React.FC = () => {
   ];
 
 
+  // Array of background images (data analysis/AI themed)
+  const bgImages = [
+    'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=1920&q=80', // data analysis
+    'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80', // code/AI
+    'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1920&q=80', // dashboard
+    'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=1920&q=80', // charts
+    'https://images.unsplash.com/photo-1526378722484-cc9ccc1a1a17?auto=format&fit=crop&w=1920&q=80', // data science
+    'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1920&q=80', // AI
+    'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=1920&q=80', // analytics
+  ];
+  // Pick a random image for each reload
+  const bgImage = bgImages[Math.floor(Math.random() * bgImages.length)];
+
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden py-20 px-4">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 via-purple-600/5 to-indigo-600/10" />
-        <div className="relative max-w-7xl mx-auto">
+      {/* Hero Section with Background Image */}
+      <section
+        className="relative overflow-hidden py-20 px-4 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: `url('${bgImage}')`
+        }}
+      >
+        {/* Dark Overlay */}
+        <div className="absolute inset-0 bg-black/40 z-0" />
+        <div className="relative z-10 max-w-7xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-center"
           >
-            <h1 className="text-5xl md:text-7xl font-bold text-slate-900 dark:text-white mb-6">
-              <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                HACKETHON <span className="text-2xl font-normal text-slate-600 dark:text-slate-300 ml-2"></span>
+            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
+              <span className="bg-gradient-to-r from-red-700 to-purple-700 bg-clip-text text-transparent">
+                HACKETHON
               </span>
             </h1>
-            <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-300 mb-8 max-w-3xl mx-auto">
-              The ultimate AI-powered platform for data analysis challenges. 
+            <p className="text-xl md:text-2xl text-slate-100 mb-8 max-w-3xl mx-auto">
+              The ultimate AI-powered platform for data analysis challenges.
               Learn, compete, and master data science skills with real-world datasets.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -159,7 +177,6 @@ const Landing: React.FC = () => {
                   <Play className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </button>
               )}
-              {/* Admin Login Button */}
               <button
                 onClick={() => { setShowAdminModal(true); setAdminError(''); setAdminPassword(''); }}
                 className="px-8 py-4 bg-orange-500 text-white rounded-xl hover:bg-orange-600 transition-all duration-200 font-semibold text-lg flex items-center gap-2"
@@ -168,44 +185,44 @@ const Landing: React.FC = () => {
               </button>
               <Link
                 to="/leaderboard"
-                className="px-8 py-4 border-2 border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 rounded-xl hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-200 font-semibold text-lg"
+                className="px-8 py-4 border-2 border-white text-white rounded-xl hover:border-blue-300 hover:text-blue-100 transition-all duration-200 font-semibold text-lg"
               >
                 View Leaderboard
               </Link>
             </div>
           </motion.div>
-          {/* Admin Login Modal */}
-          {showAdminModal && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-              <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-8 w-full max-w-sm relative">
-                <button
-                  className="absolute top-2 right-2 text-slate-400 hover:text-slate-700 dark:hover:text-white"
-                  onClick={() => setShowAdminModal(false)}
-                >
-                  ×
-                </button>
-                <h2 className="text-2xl font-bold mb-4 text-slate-900 dark:text-white text-center">Admin Login</h2>
-                <input
-                  type="password"
-                  className="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-orange-500 bg-white dark:bg-slate-700 text-slate-900 dark:text-white"
-                  placeholder="Enter admin password"
-                  value={adminPassword}
-                  onChange={e => setAdminPassword(e.target.value)}
-                  onKeyDown={e => { if (e.key === 'Enter') handleAdminLogin(); }}
-                  autoFocus
-                />
-                {adminError && <div className="text-red-500 text-sm mb-2 text-center">{adminError}</div>}
-                <button
-                  className="w-full py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold text-lg transition-all duration-200 disabled:opacity-60"
-                  onClick={handleAdminLogin}
-                  disabled={adminLoading}
-                >
-                  {adminLoading ? 'Logging in...' : 'Login as Admin'}
-                </button>
-              </div>
-            </div>
-          )}
         </div>
+        {/* Admin Login Modal */}
+        {showAdminModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+            <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-8 w-full max-w-sm relative">
+              <button
+                className="absolute top-2 right-2 text-slate-400 hover:text-slate-700 dark:hover:text-white"
+                onClick={() => setShowAdminModal(false)}
+              >
+                ×
+              </button>
+              <h2 className="text-2xl font-bold mb-4 text-slate-900 dark:text-white text-center">Admin Login</h2>
+              <input
+                type="password"
+                className="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-orange-500 bg-white dark:bg-slate-700 text-slate-900 dark:text-white"
+                placeholder="Enter admin password"
+                value={adminPassword}
+                onChange={e => setAdminPassword(e.target.value)}
+                onKeyDown={e => { if (e.key === 'Enter') handleAdminLogin(); }}
+                autoFocus
+              />
+              {adminError && <div className="text-red-500 text-sm mb-2 text-center">{adminError}</div>}
+              <button
+                className="w-full py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold text-lg transition-all duration-200 disabled:opacity-60"
+                onClick={handleAdminLogin}
+                disabled={adminLoading}
+              >
+                {adminLoading ? 'Logging in...' : 'Login as Admin'}
+              </button>
+            </div>
+          </div>
+        )}
       </section>
 
       {/* Featured Challenges Section */}
