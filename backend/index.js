@@ -18,8 +18,9 @@ const upload = multer({ dest: 'uploads/' });
 app.use(cors());
 
 
-// Google Drive setup
-const FOLDER_ID = process.env.GOOGLE_DRIVE_FOLDER_ID || '1MAUJsUBS71CUntnSR2QQBsZHxv_tDhhf';
+// Google Drive setup (moved to .env)
+const SUBMISSION_FOLDER_ID = process.env.SUBMISSION_FOLDER_ID;
+const CERTIFICATE_FOLDER_ID = process.env.CERTIFICATE_FOLDER_ID;
 
 
 // Service account credentials from env
@@ -48,9 +49,15 @@ const drive = google.drive({ version: 'v3', auth });
 
 app.post('/upload', upload.single('file'), async (req, res) => {
   try {
+    // Multer parses file, but not text fields by default. For text fields, use req.body
+    const folderType = req.body.folderType;
+    let folderId = SUBMISSION_FOLDER_ID; // default
+    if (folderType === 'certificate') {
+      folderId = CERTIFICATE_FOLDER_ID;
+    }
     const fileMetadata = {
       name: req.file.originalname,
-      parents: [FOLDER_ID],
+      parents: [folderId],
     };
     const media = {
       mimeType: req.file.mimetype,

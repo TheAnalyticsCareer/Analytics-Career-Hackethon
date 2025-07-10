@@ -123,12 +123,9 @@ const Landing: React.FC = () => {
   // Array of background images (data analysis/AI themed)
   const bgImages = [
     'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=1920&q=80', // data analysis
-    'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80', // code/AI
     'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1920&q=80', // dashboard
-    'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=1920&q=80', // charts
-    'https://images.unsplash.com/photo-1526378722484-cc9ccc1a1a17?auto=format&fit=crop&w=1920&q=80', // data science
-    'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1920&q=80', // AI
-    'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=1920&q=80', // analytics
+    'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1920&q=80',
+
   ];
   // Pick a random image for each reload
   const bgImage = bgImages[Math.floor(Math.random() * bgImages.length)];

@@ -60,9 +60,8 @@ const Certificate: React.FC<CertificateProps> = ({
           {challengeName}
         </p>
         <p className="text-md text-gray-700 leading-relaxed">
-          <span className="font-semibold"></span>{' '}
-          on <span className="font-semibold">March 30 to April 1, 2019</span>, between{' '}
-          <span className="font-semibold">8:00 AM to 4:00 PM</span>.
+          This accomplishment was achieved on{' '}
+          <span className="font-semibold">{date || new Date().toLocaleString()}</span>.
         </p>
       </div>
 
@@ -80,7 +79,7 @@ const Certificate: React.FC<CertificateProps> = ({
             className="h-12 mb-1"
           />
           <span className="text-sm font-semibold text-gray-800 border-t border-gray-400 w-32 text-center">
-            Jenny Woodruff
+            Analytics Career
           </span>
           <span className="text-xs text-gray-600">Certified Instructor</span>
         </div>
@@ -89,7 +88,7 @@ const Certificate: React.FC<CertificateProps> = ({
       {/* Footer note */}
       <p className="text-center text-sm text-gray-600 mt-7">
         This certificate was issued by <strong>Analytics Career</strong> on{' '}
-        {date || new Date().toLocaleDateString()}.
+        {date || new Date().toLocaleString()}.
       </p>
     </div>
   );

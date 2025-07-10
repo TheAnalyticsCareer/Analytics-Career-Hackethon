@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { downloadCertificateAsPDF } from '../utils/downloadCertificateAsPDF';
+import { downloadCertificateAsPDF, getCertificatePDFBlob } from '../utils/downloadCertificateAsPDF';
 import Certificate from './Certificate';
 
 interface CertificateDownloadButtonProps {
@@ -37,7 +37,24 @@ const CertificateDownloadButton: React.FC<CertificateDownloadButtonProps> = ({ e
     );
     // Wait for DOM to update
     await new Promise(r => setTimeout(r, 100));
+    // 1. Download as PDF
     await downloadCertificateAsPDF('certificate', filename);
+    // 2. Get PDF as Blob and upload to backend
+    const pdfBlob = await getCertificatePDFBlob('certificate');
+    if (pdfBlob) {
+      const formData = new FormData();
+      formData.append('file', pdfBlob, filename);
+      formData.append('folderType', 'certificate');
+      try {
+        await fetch('/api/upload', {
+          method: 'POST',
+          body: formData,
+        });
+      } catch (err) {
+        // Optionally handle upload error
+        // console.error('Failed to upload certificate to Google Drive:', err);
+      }
+    }
     root.unmount();
     // Optionally remove the container
     container.remove();
