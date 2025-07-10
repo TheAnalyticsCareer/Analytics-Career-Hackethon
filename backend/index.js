@@ -18,9 +18,9 @@ const upload = multer({ dest: 'uploads/' });
 app.use(cors());
 
 
-// Google Drive setup (moved to .env)
-const SUBMISSION_FOLDER_ID = process.env.SUBMISSION_FOLDER_ID;
-const CERTIFICATE_FOLDER_ID = process.env.CERTIFICATE_FOLDER_ID;
+// Google Drive setup
+const SUBMISSION_FOLDER_ID = '1MAUJsUBS71CUntnSR2QQBsZHxv_tDhhf';
+const CERTIFICATE_FOLDER_ID = '1QhWeyRoMq_JELxtcGrkJShqND-FFTFEs';
 
 
 // Service account credentials from env
